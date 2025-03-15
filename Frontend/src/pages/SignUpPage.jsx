@@ -1,9 +1,33 @@
 import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare, User } from 'lucide-react'
 import React, { useState } from 'react'
 import { Form, Link } from 'react-router-dom'
+import AuthImagePattern from '../components/AuthImagePattern'
+import { useAuthStore } from '../store/useAuthStore'
+import toast from 'react-hot-toast'
 
 const SignUpPage = () => {
-    const [showPassword, setShowPassword] = useState(true)
+    const [showPassword, setShowPassword] = useState(false)
+    const [formData, setFormData] = useState({
+        fullName: "",
+        email: "",
+        password: ""
+    })
+    const { signup, isSigningUp } = useAuthStore();
+    const validateForm = () => {
+        if (!formData.fullName.trim()) return toast.error("Name Is required");
+        if (!formData.email.trim()) return toast.error("Email Is required");
+        if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid Email");
+        if (!formData.password) return toast.error("Password is required")
+        if (formData.password.length < 6) return toast.error("Password mustr be atleast 6 character")
+
+        return true
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const success = validateForm()
+        if (success === true) signup(formData)
+    }
     return (
         <div className='min-h-screen grid lg: grid-cols-2'>
             <div className='flex flex-col justify-center items-center p-6 sm:p-12'>
@@ -18,7 +42,7 @@ const SignUpPage = () => {
                         </div>
                     </div>
 
-                    <form onSubmit={""} className='space-y-6'>
+                    <form onSubmit={handleSubmit} className='space-y-6'>
                         <div className='form-control'>
                             <label className='label'>
                                 <span className='label-text font-medium'>
@@ -33,7 +57,7 @@ const SignUpPage = () => {
                                     type='text'
                                     className={`input imput-bordered w-full pl-10`}
                                     placeholder='Jhon Doe'
-                                    value={FormData.fullname}
+                                    value={formData.fullName}
                                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                                 />
                             </div>
@@ -53,7 +77,7 @@ const SignUpPage = () => {
                                     type='text'
                                     className={`input imput-bordered w-full pl-10`}
                                     placeholder='you@gmail.com'
-                                    value={FormData.email}
+                                    value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                 />
                             </div>
@@ -73,7 +97,7 @@ const SignUpPage = () => {
                                     type={showPassword ? "text" : "password"}
                                     className='w-full pl-10 input-bordered'
                                     placeholder='...........'
-                                    value={FormData.password}
+                                    value={formData.password}
                                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                 />
                                 <button type='button'
@@ -92,9 +116,9 @@ const SignUpPage = () => {
                         <button
                             type='submit'
                             className='btn btn-primary w-full'
-                            disabled={true}
+                            disabled={isSigningUp}
                         >
-                            {true ? (
+                            {isSigningUp ? (
                                 <>
                                     <Loader2 className='size-5 animate-spin' />
                                     Loading....
@@ -113,6 +137,14 @@ const SignUpPage = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Right Side*/}
+
+            <AuthImagePattern
+                title="Join Our Community"
+                subTitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text"
+            >
+            </AuthImagePattern>
         </div>
     )
 }
