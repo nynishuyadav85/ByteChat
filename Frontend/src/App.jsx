@@ -9,9 +9,11 @@ import SettingPage from './pages/SettingPage'
 import { useAuthStore } from './store/useAuthStore'
 import { Loader } from "lucide-react"
 import { Toaster } from "react-hot-toast";
+import { useThemeStore } from './store/useThemeStore'
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { theme } = useThemeStore()
   useEffect(() => {
     checkAuth();
   }, [checkAuth])
@@ -24,7 +26,7 @@ const App = () => {
   )
 
   return (
-    <div>
+    <div data-theme={theme}>
       <NavBar />
       <Routes>
         <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} />
