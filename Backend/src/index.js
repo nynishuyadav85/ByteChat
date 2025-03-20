@@ -20,7 +20,7 @@ const PORT = process.env.PORT;
 
 
 app.use("/api/auth", authRoutes)
-app.use('api/message', messageRoutes)
+app.use('api/messages', messageRoutes)
 
 
 app.listen(PORT, () => {
