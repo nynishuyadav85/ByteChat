@@ -6,6 +6,7 @@ import { useAuthStore } from '../store/useAuthStore';
 const Sidebar = () => {
     const { getUsers, users, selectedUser, setSelectedUser, isUserLoading } = useChatStore();
     const { onlineUsers } = useAuthStore();
+
     useEffect(() => {
         getUsers()
     }, [getUsers])
@@ -36,7 +37,7 @@ const Sidebar = () => {
                                     className='size-12 object-cover rounded-full'
                                 />
                                 {onlineUsers.includes(user._id) && (
-                                    <span className=''></span>
+                                    <span className='absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-zinc-900' />
                                 )}
                             </div>
 
