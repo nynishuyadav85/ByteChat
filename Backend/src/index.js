@@ -5,10 +5,10 @@ import messageRoutes from '../src/routes/message.route.js'
 import { connectBD } from './libs/db.js';
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import { app, server } from './libs/socket.js';
 
 
 dotenv.config();
-const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
@@ -23,7 +23,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/messages", messageRoutes)
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log("Server " + PORT)
     connectBD();
 })
