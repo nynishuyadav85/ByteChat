@@ -21,7 +21,7 @@ io.on('connection', (socket) => {
     console.log("User Connected", socket.id)
     const userId = socket.handshake.query.userId
     if (userId) userSocketmap[userId] = socket.id
-
+ 
     io.emit("getOnlineUsers", Object.keys(userSocketmap))
 
     socket.on('disconnect', () => {
