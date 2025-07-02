@@ -3,11 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
-    "start": "npm run start --prefix backend"
+    "install:backend": "npm install --prefix Backend",
+    "install:frontend": "npm install --prefix Frontend",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "build": "npm run install:all && npm run build:frontend",
+    "build:frontend": "npm run build --prefix Frontend",
+    "start": "npm run start --prefix Backend",
+    "dev:backend": "npm run dev --prefix Backend",
+    "dev:frontend": "npm run dev --prefix Frontend",
+    "deploy:vercel": "vercel --prod",
+    "deploy:railway": "railway up"
   },
-  "keywords": [],
+  "keywords": ["chat", "socketio", "react", "nodejs", "mongodb"],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "A real-time chat application built with React, Node.js, Socket.io, and MongoDB"
 }
